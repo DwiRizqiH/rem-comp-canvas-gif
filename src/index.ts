@@ -117,8 +117,8 @@ export = async function canvasGif(
 	// Decode the gif and begin the encoder
 	const { width, height, frames } = decodeGif(bufferToEdit);
 	const encoder = new GIFEncoder(
-		width,
-		height,
+		options?.canvasWidth,
+		options?.canvasHeight,
 		algorithm,
 		optimiserEnabled,
 		frames.length
@@ -134,7 +134,7 @@ export = async function canvasGif(
 	// Render each frame and add it to the encoder
 	frames.forEach((frame, i) => {
 		// Create the frame's canvas
-		const canvas = createCanvas(options?.canvasWidth || width, options?.canvasHeight || height);
+		const canvas = createCanvas(options?.canvasWidth, options?.canvasHeight);
 		const ctx = canvas.getContext('2d');
 
 		// Create image data from the frame's data and put it on the canvas
