@@ -55,6 +55,12 @@ interface Options {
 	algorithm?: Algorithm;
 	optimiser?: boolean;
 	fps?: number;
+	canvasWidth?: number;
+	canvasHeight?: number;
+	putGifx?: number;
+	putGify?: number;
+	putGifWidth?: number;
+	putGifHeight?: number;
 	quality?: number;
 }
 
@@ -128,12 +134,12 @@ export = async function canvasGif(
 	// Render each frame and add it to the encoder
 	frames.forEach((frame, i) => {
 		// Create the frame's canvas
-		const canvas = createCanvas(width, height);
+		const canvas = createCanvas(options?.canvasWidth || width, options?.canvasHeight || height);
 		const ctx = canvas.getContext('2d');
 
 		// Create image data from the frame's data and put it on the canvas
 		const data = createImageData(frame.data, width, height);
-		ctx.putImageData(data, 0, 0);
+		ctx.putImageData(data, options?.putGifx || 0, options?.putGify || 0, options?.putGifx || 0, options?.putGify || 0, options?.putGifWidth, options?.putGifHeight);
 
 		// Run the user's custom edit function, and add the frame
 		editFrame(ctx, width, height, frames.length, i + 1, encoder);
